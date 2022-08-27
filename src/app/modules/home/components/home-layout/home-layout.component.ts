@@ -29,9 +29,9 @@ export class HomeLayoutComponent implements OnInit {
     // }
     let options = {
       filter: {'STAGE_ID': 'C7:PREPARATION', 'UF_CRM_1659706567283': "SNX609"},
-      select: ['UF_CRM_1659706567283']
+      select: ['UF_CRM_1659706567283', 'STAGE_ID']
     };
-    this.crm.getDealList('crm.deal.list', 50, options).subscribe({
+    this.crm.getDealList('crm.deal.list', 0, options).subscribe({
       'next': (deal: any) => {
         console.log(deal)
         // deal.result.forEach((item: any)=> {
