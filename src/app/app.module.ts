@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MainLayoutComponent} from "./modules/core/shared/components/main-layout/main-layout.component";
 import { CheckImageLinkDirective } from './modules/core/directives/check-image-link.directive';
+import {PageNotFoundComponent} from "./modules/core/shared/components/page-not-found/page-not-found.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     MainLayoutComponent,
-    CheckImageLinkDirective
+    CheckImageLinkDirective,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

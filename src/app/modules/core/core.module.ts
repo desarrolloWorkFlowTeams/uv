@@ -5,7 +5,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {CrmService} from "./services/crm.service";
 
 @NgModule({
-  declarations: [],
+  declarations: [
+
+  ],
   imports: [
     CommonModule,
     HttpClientModule

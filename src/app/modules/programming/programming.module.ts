@@ -2,17 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProgrammingRoutingModule } from './programming-routing.module';
-import { VolquetaComponent } from './components/volqueta/volqueta.component';
-import { GruaComponent } from './components/grua/grua.component';
-import { MaquinaComponent } from './components/maquina/maquina.component';
 import {CoreModule} from "../core/core.module";
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
   declarations: [
-    VolquetaComponent,
-    GruaComponent,
-    MaquinaComponent,
+    SearchComponent,
 
   ],
   imports: [
