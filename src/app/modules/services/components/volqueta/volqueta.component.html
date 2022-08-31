@@ -1,0 +1,43 @@
+<h1 class="text-center">Bienvenido</h1>
+<div class="row mx-0 d-flex justify-content-around">
+  <form [formGroup]="programForm" (ngSubmit)="newProgram()" class="col-11 mx-auto my-auto py-auto form-color p-3">
+    <div class="row">
+      <div class="form-floating col-2">
+        <label for="floatingSelect1">Servicio</label>
+        <select class="form-select" id="floatingSelect1" name="obra" [attr.aria-label]="'Obra'" formControlName="obra" (ngModelChange)="negociacionSeleccionada($event)">
+          <option selected>Seleccione un servicio</option>
+          <option *ngFor="let obra of this.negociaciones" [ngValue]="obra.TITLE">{{obra.TITLE}}</option>
+        </select>
+      </div>
+
+      <div class="form-floating col-2" >
+        <label for="floatingSelect2">Material</label>
+        <select class="form-select" id="floatingSelect2" name="material" [attr.aria-label]="'Material'" formControlName="material"  (ngModelChange)="traerPlacas($event)">
+          <option selected>Seleccione un servicio</option>
+          <option *ngFor="let material of this.materiales" [ngValue]="material.PRODUCT_NAME">{{material.PRODUCT_NAME}}</option>
+        </select>
+      </div>
+
+      <div class="form-floating col-2">
+        <label for="floatingSelect3">Placa</label>
+        <select class="form-select" id="floatingSelect3" name="placa" [attr.aria-label]="'Placa'" formControlName="placa">
+          <option selected>Seleccione un servicio</option>
+          <option *ngFor="let placa of this.placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
+        </select>
+      </div>
+
+      <div class="form-floating mb-3 col-2">
+        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="origen" formControlName="origen">
+        <label for="floatingInput">Origen</label>
+      </div>
+
+      <div class="form-floating col-2">
+        <input type="text" class="form-control" id="floatingPassword" placeholder="Password" name="destino"  formControlName="destino">
+        <label for="floatingPassword">Destino</label>
+      </div>
+
+      <button class="btn btn-outline-danger col-2" type="submit">Enviar</button>
+    </div>
+
+  </form>
+</div>
