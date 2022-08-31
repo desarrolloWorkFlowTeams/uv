@@ -8,7 +8,10 @@ import { MaquinaComponent } from './components/maquina/maquina.component';
 import { ServiceLayoutComponent } from './components/service-layout/service-layout.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CoreModule} from "../core/core.module";
-
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {MatSelectModule} from "@angular/material/select";
+import {NgSelectModule} from "@ng-select/ng-select";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
@@ -22,7 +25,11 @@ import {CoreModule} from "../core/core.module";
     ServicesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreModule
+    CoreModule,
+    NgSelectModule,
+    NgxMatSelectSearchModule,
+    MatFormFieldModule,
+    MatSelectModule
   ]
 })
 export class ServicesModule { }
