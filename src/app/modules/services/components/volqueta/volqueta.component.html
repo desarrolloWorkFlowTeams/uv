@@ -4,38 +4,38 @@
 
   <form [formGroup]="programForm" (ngSubmit)="newProgram()" class="row border rounded">
 
-    <div class="form-floating mt-3 col-6 col-md-3">
-      <select class="form-select" id="floatingSelect1" name="obra" [attr.aria-label]="'Obra'" formControlName="obra" (ngModelChange)="negociacionSeleccionada($event)">
-        <option selected>Seleccione un servicio</option>
+    <div class="mt-3 col-6 col-md-3">
+      <label for="exampleDataList1" class="form-label"><strong>Obra</strong></label>
+      <input class="form-control" list="datalistOptions1" id="exampleDataList1" name="obra" placeholder="Buscar Obra..." formControlName="obra" (ngModelChange)="negociacionSeleccionada($event)">
+      <datalist id="datalistOptions1">
         <option *ngFor="let obra of this.negociaciones" [ngValue]="obra.TITLE">{{obra.TITLE}}</option>
-      </select>
-      <label for="floatingSelect1">Obra</label>
+      </datalist>
     </div>
 
-    <div class="form-floating mt-3 col-6 col-md-3" >
-      <select class="form-select" id="floatingSelect2" name="material" [attr.aria-label]="'Material'" formControlName="material"  (ngModelChange)="traerPlacas($event)">
-        <option selected>Seleccione un servicio</option>
+    <div class="mt-3 col-6 col-md-3">
+      <label for="exampleDataList2" class="form-label"><strong>Material</strong></label>
+      <input class="form-control" list="datalistOptions2" id="exampleDataList2" name="material" placeholder="Buscar Material..." formControlName="material"  (ngModelChange)="traerPlacas($event)">
+      <datalist id="datalistOptions2">
         <option *ngFor="let material of this.materiales" [ngValue]="material.PRODUCT_NAME">{{material.PRODUCT_NAME}}</option>
-      </select>
-      <label for="floatingSelect2">Material</label>
+      </datalist>
     </div>
 
-    <div class="form-floating mt-3 col-4 col-md-2">
-      <select class="form-select" id="floatingSelect3" name="placa" [attr.aria-label]="'Placa'" formControlName="placa">
-        <option selected>Seleccione un servicio</option>
+    <div class="mt-3 col-4 col-md-2">
+      <label for="exampleDataList3" class="form-label"><strong>Placa</strong></label>
+      <input class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa" placeholder="Buscar Placa..." formControlName="placa">
+      <datalist id="datalistOptions3">
         <option *ngFor="let placa of this.placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
-      </select>
-      <label for="floatingSelect3">Placa</label>
+      </datalist>
     </div>
 
-    <div class="form-floating mt-3 col-4 col-md-2">
-      <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="origen" formControlName="origen">
-      <label for="floatingInput">Origen</label>
+    <div class="mt-3 col-4 col-md-2">
+      <label for="exampleFormControlInput1" class="form-label"><strong>Origen</strong></label>
+      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Origen" name="origen"  formControlName="origen">
     </div>
 
-    <div class="form-floating mt-3 col-4 col-md-2">
-      <input type="text" class="form-control" id="floatingPassword" placeholder="Password" name="destino"  formControlName="destino">
-      <label for="floatingPassword">Destino</label>
+    <div class="mt-3 col-4 col-md-2">
+      <label for="exampleFormControlInput2" class="form-label"><strong>Destino</strong></label>
+      <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Destino" name="destino"  formControlName="destino">
     </div>
 
     <div class="row mt-5 justify-content-center">
