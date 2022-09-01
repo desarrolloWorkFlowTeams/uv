@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import {MainLayoutComponent} from "./modules/core/shared/components/main-layout/main-layout.component";
 import { CheckImageLinkDirective } from './modules/core/directives/check-image-link.directive';
 import {PageNotFoundComponent} from "./modules/core/shared/components/page-not-found/page-not-found.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {PageNotFoundComponent} from "./modules/core/shared/components/page-not-f
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   exports: [
