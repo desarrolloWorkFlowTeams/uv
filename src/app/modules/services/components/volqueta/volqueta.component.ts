@@ -35,9 +35,6 @@ export class VolquetaComponent implements OnInit {
     this.route.queryParams.subscribe(query => {
       this.codeService = query['service'];
       this.id = query['id'];
-      console.log(query['service'])
-      console.log(query['id'])
-      console.log(query['embudo'])
       this.getDataNegotiation();
     })
     // if(this.codeService !=='63'){
@@ -49,13 +46,11 @@ export class VolquetaComponent implements OnInit {
   }
 
   getDataNegotiation() {
-    // "filter"=> [ "STAGE_ID"=>"WON","UF_CRM_1654179740278"=>$numServicio ]
     const options = {
       filter: {'STAGE_ID': `WON`, 'UF_CRM_1654179740278': `${this.codeService}`},
     };
     this.crm.getDealList(0, options).subscribe({
       'next': (deals: any) => {
-        console.log(deals);
         this.negociaciones = deals.result;
       },
       'error': err => console.log(err)
@@ -63,17 +58,17 @@ export class VolquetaComponent implements OnInit {
   }
 
   newProgram() {
-    console.log('_____Values form______',this.programForm.value)
-    this.negociacionesAEnviar.push(this.programForm.value);
+    console.log('_____Values form______',this.programForm.value);
+    let program = this.programForm.value;
+    program.customId = this.negociacionesAEnviar.length+1;
+    this.negociacionesAEnviar.push(program);
     this.programForm.reset();
   }
 
   negociacionSeleccionada(event?: any) {
-    console.log(event)
     if(event){
       this.crm.getDealProductList(`${this.negociaciones.filter((negociacion:any) => negociacion.TITLE === event)[0].ID}`).subscribe({
         'next': (products: any) =>{
-          console.log('_____products______',products)
           this.materiales = products.result;
         }
       });
@@ -81,16 +76,17 @@ export class VolquetaComponent implements OnInit {
 
   }
 
+  actualizarNegociacionesAEnviar(event: any) {
+    this.negociacionesAEnviar = event;
+  }
+
   traerPlacas(event?: any) {
-    console.log(event)
     let options = {
           filter: { 'UF_CRM_1659061343591': `${this.id}`},
         };
 
     this.crm.getCompanyList(`${this.id}`, options).subscribe({
       'next': (companies: any) =>{
-        console.log('_____companies______',companies)
-
         this.placas = companies.result;
       }
     });
