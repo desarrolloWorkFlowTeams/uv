@@ -34,4 +34,27 @@ crm = environment.crm
     const body = options;
     return this.http.post(`${this.crm}/crm.company.list.json`, body,  {params});
   }
+
+  enviarProgramacion(programacion: any, embudo: string) {
+    const body = {
+      fields: {
+        TITLE: `${programacion.obra}`,
+        CATEGORY_ID: `${embudo}`,
+        UF_CRM_1659706567283: `${programacion.placa}`,
+        UF_CRM_1659706553211: `${programacion.obra}`,
+        UF_CRM_1654545135809: `${programacion.origen}`,
+        UF_CRM_1654545151906: `${programacion.destino}`
+      }
+    }
+    return this.http.post(`${this.crm}/crm.deal.add`, body);
+  }
+
+  agregarProductosANuevaProgramacion(id: string, rows: any[]) {
+    const body = {
+      id,
+      rows,
+
+    }
+    return this.http.post(`${this.crm}/crm.deal.productrows.set`, body);
+  }
 }
