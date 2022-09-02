@@ -1,0 +1,48 @@
+<!-- <div>
+  <h3>Hola</h3>
+  <ng-container *ngFor="let negociacion of negociaciones">
+    {{negociacion.obra}}
+
+  </ng-container>
+</div> -->
+
+<div class="container mt-5">
+  <h3 class="text-center mb-5 titulo">Programaciones a Enviar</h3>
+  <div class="table-responsive">
+    <table class="table table-striped mb-5 align-middle mx-0 table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Obra</th>
+          <th scope="col">Material</th>
+          <th scope="col">Placa</th>
+          <th scope="col">Origen</th>
+          <th scope="col">Destino</th>
+          <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let negociacion of negociaciones">
+        <tr>
+          <td class="text-nowrap" scope="row">{{negociacion.obra}}</td>
+          <td class="text-nowrap">{{negociacion.material}}</td>
+          <td class="text-nowrap">{{negociacion.placa}}</td>
+          <td class="text-nowrap">{{negociacion.origen}}</td>
+          <td class="text-nowrap">{{negociacion.destino}}</td>
+          <td>
+            <div class="row mx-0 px-0 mb-2">
+              <button class="btn btn-outline-danger col-auto text-nowrap">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+        <!-- <td colspan="5">
+          <div class="row justify-content-center border-bottom mb-2">
+            <button class="btn btn-outline-danger col-7 col-md-4">
+              Eliminar Programación
+            </button>
+          </div>
+        </td> -->
+      </tbody>
+    </table>
+  </div>
+</div>

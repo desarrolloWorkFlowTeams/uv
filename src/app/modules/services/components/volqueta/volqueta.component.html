@@ -8,7 +8,7 @@
       <label for="exampleDataList1" class="form-label"><strong>Obra</strong></label>
       <input class="form-control" list="datalistOptions1" id="exampleDataList1" name="obra" placeholder="Buscar Obra..." formControlName="obra" (ngModelChange)="negociacionSeleccionada($event)">
       <datalist id="datalistOptions1">
-        <option *ngFor="let obra of this.negociaciones" [ngValue]="obra.TITLE">{{obra.TITLE}}</option>
+        <option *ngFor="let obra of negociaciones" [ngValue]="obra.TITLE">{{obra.TITLE}}</option>
       </datalist>
     </div>
 
@@ -16,7 +16,7 @@
       <label for="exampleDataList2" class="form-label"><strong>Material</strong></label>
       <input class="form-control" list="datalistOptions2" id="exampleDataList2" name="material" placeholder="Buscar Material..." formControlName="material"  (ngModelChange)="traerPlacas($event)">
       <datalist id="datalistOptions2">
-        <option *ngFor="let material of this.materiales" [ngValue]="material.PRODUCT_NAME">{{material.PRODUCT_NAME}}</option>
+        <option *ngFor="let material of materiales" [ngValue]="material.PRODUCT_NAME">{{material.PRODUCT_NAME}}</option>
       </datalist>
     </div>
 
@@ -24,7 +24,7 @@
       <label for="exampleDataList3" class="form-label"><strong>Placa</strong></label>
       <input class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa" placeholder="Buscar Placa..." formControlName="placa">
       <datalist id="datalistOptions3">
-        <option *ngFor="let placa of this.placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
+        <option *ngFor="let placa of placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
       </datalist>
     </div>
 
@@ -43,4 +43,14 @@
     </div>
 
   </form>
+
+  <div>
+    <table-services *ngIf="negociacionesAEnviar.length !== 0" [negociaciones]="negociacionesAEnviar"></table-services>
+  </div>
+
+  <div class="row justify-content-between mt-5 mb-5 mx-5">
+    <a [routerLink]="['/services']" class="btn btn-outline-primary col-2">Regresar</a>
+    <a *ngIf="negociacionesAEnviar.length !== 0" [routerLink]="['/']" class="btn btn-outline-danger col-2">Enviar</a>
+  </div>
+
 </div>

@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class VolquetaComponent implements OnInit {
 
   programForm!: FormGroup;
+  negociacionesAEnviar: any[] = [];
   codeService = '';
   id='';
   negociaciones: any[]= []
@@ -62,9 +63,8 @@ export class VolquetaComponent implements OnInit {
   }
 
   newProgram() {
-
-console.log('_____origgen______',this.programForm.value.origen)
-console.log('_____destino______',this.programForm.value.destino)
+    console.log('_____Values form______',this.programForm.value)
+    this.negociacionesAEnviar.push(this.programForm.value);
     this.programForm.reset();
   }
 
