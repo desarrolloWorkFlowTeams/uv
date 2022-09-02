@@ -4,65 +4,53 @@
 
   <form [formGroup]="programForm" (ngSubmit)="newProgram()" class="row border rounded">
 
-    <!--    select de obra-->
-    <mat-form-field class="col-2">
-      <mat-select [formControl]="obraCtrl" placeholder="Obra" #obraSelect name="obra" formControlName="obra"
-                  (ngModelChange)="traerMateriales($event)">
-        <mat-option>
-          <ngx-mat-select-search [formControl]="filtroObraCtrl"></ngx-mat-select-search>
-        </mat-option>
-        <mat-option *ngFor="let obra of obrasFiltradas | async" [value]="obra.TITLE">
-          {{obra.TITLE}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!--    select de material-->
-    <mat-form-field class="col-2">
-      <mat-select [formControl]="materialCtrl" placeholder="Material" #materialSelect name="material"
-                  formControlName="material">
-        <mat-option>
-          <ngx-mat-select-search [formControl]="filtroMaterialCtrl"></ngx-mat-select-search>
-        </mat-option>
-        <mat-option *ngFor="let material of materialsFiltrados | async" [value]="material.PRODUCT_NAME">
-          {{material.PRODUCT_NAME}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!--select de placas-->
-    <mat-form-field class="col-2">
-      <mat-select [formControl]="placaCtrl" placeholder="Placa" #placaSelect name="placa" formControlName="placa">
-        <mat-option>
-          <ngx-mat-select-search [formControl]="filtroPlacaCtrl"></ngx-mat-select-search>
-        </mat-option>
-        <mat-option *ngFor="let placa of placasFiltradas | async" [value]="placa.TITLE">
-          {{placa.TITLE}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div class="form-floating mt-3 col-4 col-md-2">
-      <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="origen"
-             formControlName="origen">
-      <label for="floatingInput">Origen</label>
+    <div class="mt-3 col-6 col-md-3">
+      <label for="exampleDataList1" class="form-label"><strong>Obra</strong></label>
+      <input class="form-control" list="datalistOptions1" id="exampleDataList1" name="obra" placeholder="Buscar Obra..." formControlName="obra" (ngModelChange)="negociacionSeleccionada($event)">
+      <datalist id="datalistOptions1">
+        <option *ngFor="let obra of negociaciones" [ngValue]="obra.TITLE">{{obra.TITLE}}</option>
+      </datalist>
     </div>
 
-    <!--input destino-->
-        <div class="form-floating mt-3 col-4 col-md-2">
-          <input type="text" class="form-control" id="floatingPassword" placeholder="Password" name="destino"
-                 formControlName="destino">
-          <label for="floatingPassword">Destino</label>
-        </div>
+    <div class="mt-3 col-6 col-md-3">
+      <label for="exampleDataList2" class="form-label"><strong>Material</strong></label>
+      <input class="form-control" list="datalistOptions2" id="exampleDataList2" name="material" placeholder="Buscar Material..." formControlName="material"  (ngModelChange)="traerPlacas($event)">
+      <datalist id="datalistOptions2">
+        <option *ngFor="let material of materiales" [ngValue]="material.PRODUCT_NAME">{{material.PRODUCT_NAME}}</option>
+      </datalist>
+    </div>
+
+    <div class="mt-3 col-4 col-md-2">
+      <label for="exampleDataList3" class="form-label"><strong>Placa</strong></label>
+      <input class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa" placeholder="Buscar Placa..." formControlName="placa">
+      <datalist id="datalistOptions3">
+        <option *ngFor="let placa of placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
+      </datalist>
+    </div>
+
+    <div class="mt-3 col-4 col-md-2">
+      <label for="exampleFormControlInput1" class="form-label"><strong>Origen</strong></label>
+      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Origen" name="origen"  formControlName="origen">
+    </div>
+
+    <div class="mt-3 col-4 col-md-2">
+      <label for="exampleFormControlInput2" class="form-label"><strong>Destino</strong></label>
+      <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Destino" name="destino"  formControlName="destino">
+    </div>
 
     <div class="row mt-5 justify-content-center">
       <button class="btn btn-outline-danger col-7 col-md-4 mb-3" type="submit">Agregar Programación</button>
     </div>
 
-
   </form>
+
+  <div>
+    <table-services *ngIf="negociacionesAEnviar.length !== 0" [negociaciones]="negociacionesAEnviar"></table-services>
+  </div>
+
+  <div class="row justify-content-between mt-5 mb-5 mx-5">
+    <a [routerLink]="['/services']" class="btn btn-outline-primary col-2">Regresar</a>
+    <a *ngIf="negociacionesAEnviar.length !== 0" [routerLink]="['/']" class="btn btn-outline-danger col-2">Enviar</a>
+  </div>
+
 </div>
-
-
-
-
