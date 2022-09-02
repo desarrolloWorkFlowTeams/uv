@@ -12,8 +12,10 @@ export class VolquetaComponent implements OnInit {
 
   programForm!: FormGroup;
   negociacionesAEnviar: any[] = [];
+  productosAEnviar: any[] = [];
   codeService = '';
   id='';
+  embudoId = '';
   negociaciones: any[]= []
   materiales: any[] = []
   placas: any[] = [];
@@ -36,6 +38,7 @@ export class VolquetaComponent implements OnInit {
       this.codeService = query['service'];
       this.id = query['id'];
       this.getDataNegotiation();
+      this.embudoId = query['embudo'];
     })
     // if(this.codeService !=='63'){
     //   delete this.campos.material;
@@ -61,7 +64,11 @@ export class VolquetaComponent implements OnInit {
     console.log('_____Values form______',this.programForm.value);
     let program = this.programForm.value;
     program.customId = this.negociacionesAEnviar.length+1;
+    console.log("Id Material : ", this.programForm.value.material);
+    console.log("Materiales : ", this.materiales);
+    program.producto = this.materiales.filter(producto => producto.PRODUCT_ID == this.programForm.value.material)[0];
     this.negociacionesAEnviar.push(program);
+    console.log("Negociaciones a enviar: ", this.negociacionesAEnviar);
     this.programForm.reset();
   }
 
@@ -91,4 +98,26 @@ export class VolquetaComponent implements OnInit {
       }
     });
   }
+
+  enviarProgramaciones() {
+    console.log("Programaciones a enviar: ", this.negociacionesAEnviar);
+    let i = 0;
+    do {
+      this.crm.enviarProgramacion(this.negociacionesAEnviar[i], `${this.embudoId}`).subscribe({
+        "next": (result: any) => {
+          console.log("Resultado envio de negociación: ", result);
+          this.crm.agregarProductosANuevaProgramacion(`${result.result}`, this.productosAEnviar.filter(
+            producto => producto.PRODUCT_ID == this.negociacionesAEnviar[i].PRODUCT_ID
+            ))
+        },
+        "error": (error: any) => console.log("Errorado envio de negociación: ", error)
+      });
+      i++;
+    } while (i < this.negociacionesAEnviar.length);
+  }
 }
+
+// [
+//   { "PRODUCT_ID": 689, "PRICE": 100.00, "QUANTITY": 4 },
+//   { "PRODUCT_ID": 690, "PRICE": 400.00, "QUANTITY": 1 }
+// ]
