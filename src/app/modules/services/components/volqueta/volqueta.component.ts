@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CrmService} from "../../../core/services/crm.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'volqueta',
@@ -14,9 +15,9 @@ export class VolquetaComponent implements OnInit {
   negociacionesAEnviar: any[] = [];
   productosAEnviar: any[] = [];
   codeService = '';
-  id='';
+  id = '';
   embudoId = '';
-  negociaciones: any[]= []
+  negociaciones: any[] = []
   materiales: any[] = []
   placas: any[] = [];
   campos: any = {
@@ -26,11 +27,14 @@ export class VolquetaComponent implements OnInit {
     origen: ['', [Validators.required]],
     destino: ['', [Validators.required]],
   }
+  productSelected: any[] = [];
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly route: ActivatedRoute,
-    private readonly crm: CrmService) {
+    private readonly crm: CrmService,
+    private readonly router: Router
+  ) {
   }
 
   ngOnInit(): void {
@@ -46,6 +50,9 @@ export class VolquetaComponent implements OnInit {
     // }
     this.programForm = this.formBuilder.group(this.campos)
     this.traerPlacas();
+    $('#datalistOptions2').click(function (e) {
+      console.log(e)
+    })
   }
 
   getDataNegotiation() {
@@ -61,21 +68,21 @@ export class VolquetaComponent implements OnInit {
   }
 
   newProgram() {
-    console.log('_____Values form______',this.programForm.value);
+    console.log('_____Values form______', this.programForm.value);
     let program = this.programForm.value;
-    program.customId = this.negociacionesAEnviar.length+1;
+    program.customId = this.negociacionesAEnviar.length + 1;
+    program.producto = this.productSelected[0];
     console.log("Id Material : ", this.programForm.value.material);
     console.log("Materiales : ", this.materiales);
-    program.producto = this.materiales.filter(producto => producto.PRODUCT_ID == this.programForm.value.material)[0];
     this.negociacionesAEnviar.push(program);
     console.log("Negociaciones a enviar: ", this.negociacionesAEnviar);
     this.programForm.reset();
   }
 
   negociacionSeleccionada(event?: any) {
-    if(event){
-      this.crm.getDealProductList(`${this.negociaciones.filter((negociacion:any) => negociacion.TITLE === event)[0].ID}`).subscribe({
-        'next': (products: any) =>{
+    if (event) {
+      this.crm.getDealProductList(`${this.negociaciones.filter((negociacion: any) => negociacion.TITLE === event)[0].ID}`).subscribe({
+        'next': (products: any) => {
           this.materiales = products.result;
         }
       });
@@ -88,12 +95,19 @@ export class VolquetaComponent implements OnInit {
   }
 
   traerPlacas(event?: any) {
+    if (event) {
+      this.productSelected = []
+      this.productSelected = this.materiales.filter(
+        product => product.PRODUCT_NAME === event.target.value
+      );
+      console.log('productSelected', this.productSelected)
+    }
     let options = {
-          filter: { 'UF_CRM_1659061343591': `${this.id}`},
-        };
+      filter: {'UF_CRM_1659061343591': `${this.id}`},
+    };
 
     this.crm.getCompanyList(`${this.id}`, options).subscribe({
-      'next': (companies: any) =>{
+      'next': (companies: any) => {
         this.placas = companies.result;
       }
     });
@@ -102,19 +116,35 @@ export class VolquetaComponent implements OnInit {
   enviarProgramaciones() {
     console.log("Programaciones a enviar: ", this.negociacionesAEnviar);
     let i = 0;
-    do {
+    while (i < this.negociacionesAEnviar.length){
       this.crm.enviarProgramacion(this.negociacionesAEnviar[i], `${this.embudoId}`).subscribe({
         "next": (result: any) => {
-          console.log("Resultado envio de negociación: ", result);
-          this.crm.agregarProductosANuevaProgramacion(`${result.result}`, this.productosAEnviar.filter(
-            producto => producto.PRODUCT_ID == this.negociacionesAEnviar[i].PRODUCT_ID
-            ))
+          console.log("Resultado envio de negociación "+i+': ', result);
+
+          const row = [
+            {
+              PRODUCT_ID: this.negociacionesAEnviar[0].producto.PRODUCT_ID,
+              PRICE: this.negociacionesAEnviar[0].producto.PRICE,
+              QUANTITY: this.negociacionesAEnviar[0].producto.QUANTITY
+            }
+          ]
+          console.log({row});
+
+          this.crm.agregarProductosANuevaProgramacion(`${result.result}`, row ).subscribe({
+            'next': productResult => {
+              console.log('productResult ' + i + ' => ', productResult);
+              this.router.navigate(['/services']).then()
+            },
+            'error': error => console.log('productResult '+i+' => ',error),
+          })
         },
         "error": (error: any) => console.log("Errorado envio de negociación: ", error)
       });
       i++;
-    } while (i < this.negociacionesAEnviar.length);
+    }
   }
+
+
 }
 
 // [
