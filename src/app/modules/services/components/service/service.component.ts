@@ -117,7 +117,6 @@ export class ServiceComponent implements OnInit {
         }
       });
     }
-
   }
 
   actualizarNegociacionesAEnviar(event: any) {
