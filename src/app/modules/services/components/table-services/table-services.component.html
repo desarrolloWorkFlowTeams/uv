@@ -28,20 +28,13 @@
           <td class="text-nowrap">{{negociacion.origen}}</td>
           <td class="text-nowrap">{{negociacion.destino}}</td>
           <td>
-            <div class="row mx-0 px-0 mb-2">
-              <button (click)="eliminarProgramacion(negociacion.customId)" class="btn btn-outline-danger col-auto text-nowrap">
-                Eliminar
+            <div class="row mx-0 px-0">
+              <button (click)="eliminarProgramacion(negociacion.customId)" class="btn btn-outline-danger col-auto">
+                <i class="bi bi-trash"></i>
               </button>
             </div>
           </td>
         </tr>
-        <!-- <td colspan="5">
-          <div class="row justify-content-center border-bottom mb-2">
-            <button class="btn btn-outline-danger col-7 col-md-4">
-              Eliminar Programación
-            </button>
-          </div>
-        </td> -->
       </tbody>
     </table>
   </div>

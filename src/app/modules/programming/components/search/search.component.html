@@ -1,19 +1,25 @@
-<h3 class="text-center mt-3 titulo"><b>Buscar Programación</b> </h3>
+<h3 class="text-center mt-3 titulo">Buscar Programación</h3>
 
-<div class="container w-25 mt-5">
+<div class="container mt-5">
 
-  <div class="input-group">
-    <span class="input-group-text" id="inputGroup-sizing-default">Placa</span>
-    <input class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa"
-      placeholder="Seleccione una placa" formControlName="placa">
-    <datalist id="datalistOptions3">
-      <option *ngFor="let placa of placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
-    </datalist>
-    <button [routerLink]="['/programming/result-search']" class="btn btn-outline-danger" type="submit">Enviar</button>
-  </div>
+  <form action="">
+    <div class="row justify-content-center">
+      <div class="col-10 col-md-6">
+        <div class="input-group">
+          <span class="input-group-text" id="inputGroup-sizing-default">Placa</span>
+          <input autocomplete="off" class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa"
+            placeholder="Seleccione una placa" formControlName="placa">
+          <datalist id="datalistOptions3">
+            <option *ngFor="let placa of placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
+          </datalist>
+          <button [routerLink]="['/programming/result-search']" class="btn btn-outline-danger" type="submit">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </form>
 
   <div class="row justify-content-center mt-5">
-    <button [routerLink]="['/']" class="btn btn-outline-primary mt-3 col-6"
+    <button [routerLink]="['/']" class="btn btn-outline-primary mt-3 col-6 col-md-2"
       type="submit">Regresar</button>
   </div>
 
