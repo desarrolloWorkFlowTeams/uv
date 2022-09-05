@@ -33,8 +33,7 @@ export class ServiceComponent implements OnInit {
     private readonly crm: CrmService,
     private readonly router: Router,
     private toastr: ToastrService,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(param => {
