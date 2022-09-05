@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {VolquetaComponent} from "./components/volqueta/volqueta.component";
-import {GruaComponent} from "./components/grua/grua.component";
-import {MaquinaComponent} from "./components/maquina/maquina.component";
+import {ServiceComponent} from "./components/service/service.component";
 import {ServiceLayoutComponent} from "./components/service-layout/service-layout.component";
 
 const routes: Routes = [
@@ -11,15 +9,9 @@ const routes: Routes = [
     component: ServiceLayoutComponent
   },
   {
-    path: 'volqueta',
-    component: VolquetaComponent
-  },{
-    path: 'grua',
-    component: GruaComponent
-  },{
-    path: 'maquina',
-    component: MaquinaComponent
-  },
+    path: ':service',
+    component: ServiceComponent
+  }
 ];
 
 @NgModule({

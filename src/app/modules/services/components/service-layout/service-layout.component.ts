@@ -31,37 +31,30 @@ export class ServiceLayoutComponent implements OnInit {
 
 
   goToProgrammingModule() {
-    console.log('____valid_____', this.servicesForm.valid)
-    console.log('____get(\'service\')_____', this.servicesForm.get('service')?.value)
     if (!this.servicesForm.valid) return;
-    console.log('________this.servicesForm.value.service____', this.servicesForm.value.service)
+    let queryParams = {};
     switch (this.servicesForm.value.service) {
       case ServicesEnum.volqueta:
-        this.router.navigate([`/services/volqueta`], {
-          queryParams: {
+          queryParams= {
             embudo: 7,
             id: 265,
             service: 63,
           }
-        }).then()
         break;case ServicesEnum.grua:
-        this.router.navigate([`/services/volqueta`], {
-          queryParams: {
+          queryParams= {
             embudo: 3,
             id: 265,
             service: 67,
           }
-        }).then()
         break;case ServicesEnum.maquina:
-        this.router.navigate([`/services/volqueta`], {
-          queryParams: {
+          queryParams= {
             embudo: 9,
             id: 289,
             service: 65 ,
           }
-        }).then()
         break;
     }
+    this.router.navigate(['/services/'+this.servicesForm.value.service], {queryParams}).then()
   }
 
 }

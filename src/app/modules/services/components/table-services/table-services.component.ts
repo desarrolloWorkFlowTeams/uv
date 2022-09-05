@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {ServicesEnum} from "../../../core/utils/services.enum";
 
 @Component({
   selector: 'table-services',
@@ -9,10 +11,14 @@ export class TableServicesComponent implements OnInit {
 
   @Input() negociaciones: any[] = [];
   @Output() nuevasNegociaciones = new EventEmitter();
-
-  constructor() { }
+  path = '';
+  servicesEnum = ServicesEnum;
+  constructor( private readonly route: ActivatedRoute,) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(param => {
+      this.path = param['service'];
+    })
   }
 
   eliminarProgramacion(id: number){
