@@ -8,6 +8,7 @@ import { MaquinaComponent } from './components/maquina/maquina.component';
 import { ServiceLayoutComponent } from './components/service-layout/service-layout.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CoreModule} from "../core/core.module";
+import { TableServicesComponent } from './components/table-services/table-services.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {CoreModule} from "../core/core.module";
     VolquetaComponent,
     GruaComponent,
     MaquinaComponent,
-    ServiceLayoutComponent
+    ServiceLayoutComponent,
+    TableServicesComponent
   ],
   imports: [
     CommonModule,
