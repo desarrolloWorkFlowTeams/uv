@@ -4,17 +4,24 @@ import { CommonModule } from '@angular/common';
 import { ProgrammingRoutingModule } from './programming-routing.module';
 import {CoreModule} from "../core/core.module";
 import { SearchComponent } from './components/search/search.component';
+import { ResultSearchComponent } from './components/result-search/result-search.component';
+import { NegotiationInProgressComponent } from './components/negotiation-in-progress/negotiation-in-progress.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     SearchComponent,
+    ResultSearchComponent,
+    NegotiationInProgressComponent,
 
   ],
   imports: [
     CommonModule,
     ProgrammingRoutingModule,
     CoreModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProgrammingModule { }

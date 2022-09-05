@@ -1,6 +1,20 @@
-<form>
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-    <span class="input-group-text" id="inputGroup-sizing-default"><i class="bi-search"></i></span>
+<h3 class="text-center mt-3 titulo"><b>Buscar Programación</b> </h3>
+
+<div class="container w-25 mt-5">
+
+  <div class="input-group">
+    <span class="input-group-text" id="inputGroup-sizing-default">Placa</span>
+    <input class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa"
+      placeholder="Seleccione una placa" formControlName="placa">
+    <datalist id="datalistOptions3">
+      <option *ngFor="let placa of placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
+    </datalist>
+    <button [routerLink]="['/programming/result-search']" class="btn btn-outline-danger" type="submit">Enviar</button>
   </div>
-</form>
+
+  <div class="row justify-content-center mt-5">
+    <button [routerLink]="['/']" class="btn btn-outline-primary mt-3 col-6"
+      type="submit">Regresar</button>
+  </div>
+
+</div>

@@ -8,12 +8,16 @@ import {CrmService} from "../../../core/services/crm.service";
 })
 export class SearchComponent implements OnInit {
 
+  id:string= "265";
+  placas: any[] =[];
   deals: any [] = [];
   state = 'C7:PREPARATION';
   constructor(private readonly crm: CrmService) {
   }
 
   ngOnInit(): void {
+
+    this.traerPlacas();
     // this.crm.getDealForId('crm.deal.get', '1483').subscribe({
     //   'next': (deal: any) => {
     //     console.log(('_').repeat(50))
@@ -53,6 +57,21 @@ export class SearchComponent implements OnInit {
   //     select: ['UF_CRM_1659706567283', 'STAGE_ID']
   //   };
   // }
+
+  traerPlacas(event?: any) {
+    console.log(event)
+    let options = {
+          filter: { 'UF_CRM_1659061343591': `${this.id}`},
+        };
+
+    this.crm.getCompanyList(`${this.id}`, options).subscribe({
+      'next': (companies: any) =>{
+        console.log('_____companies______',companies)
+
+        this.placas = companies.result;
+      }
+    });
+  }
 
 }
 // UF_CRM_1659706567283
