@@ -87,6 +87,7 @@ export class ServiceComponent implements OnInit {
     };
     this.crm.getDealList(0, options).subscribe({
       'next': (deals: any) => {
+        this.negociaciones = [];
         this.negociaciones = deals.result;
       },
       'error': err => console.log(err)
@@ -104,6 +105,7 @@ export class ServiceComponent implements OnInit {
       this.negociacionesAEnviar.push(program);
       console.log("Negociaciones a enviar: ", this.negociacionesAEnviar);
       this.programForm.reset();
+      this.getDataNegotiation();
     }
 
   }
