@@ -107,7 +107,6 @@ export class ServiceComponent implements OnInit {
       this.programForm.reset();
       this.getDataNegotiation();
     }
-
   }
 
   negociacionSeleccionada(event?: any) {
