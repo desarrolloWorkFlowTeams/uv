@@ -2,7 +2,7 @@
 
 <div class="container">
 
-  <form [formGroup]="programForm" (ngSubmit)="newProgram()" class="row d-flex justify-content-around border rounded">
+  <form [formGroup]="programForm" (ngSubmit)="newProgram()" class="row d-flex justify-content-around border rounded mx-1">
     <div [ngClass]="path === servicesEnum.volqueta?'mt-3 col-6 col-md-3': (path === servicesEnum.grua? 'mt-3 col-6 col-md-2':'mt-3 col-6')">
       <label for="exampleDataList1" class="form-label"><strong>Obra</strong></label>
       <input autocomplete="off" class="form-control" list="datalistOptions1" id="exampleDataList1" name="obra" placeholder="Buscar Obra..." formControlName="obra" (ngModelChange)="negociacionSeleccionada($event)">
@@ -47,9 +47,9 @@
     <table-services *ngIf="negociacionesAEnviar.length !== 0" (nuevasNegociaciones)="actualizarNegociacionesAEnviar($event)" [negociaciones]="negociacionesAEnviar"></table-services>
   </div>
 
-  <div class="row justify-content-between mt-5 mb-5 mx-5">
+  <div class="row d-flex mt-5 mb-5 mx-1" [ngClass]="negociacionesAEnviar.length !== 0? 'justify-content-between': 'justify-content-start'">
     <a [routerLink]="['..']" class="btn btn-outline-primary col-md-2 col-4">Regresar</a>
-    <div *ngIf="negociacionesAEnviar.length !== 0" (click)="enviarProgramaciones()" class="btn btn-outline-danger col-md-2 col-4">Enviar</div>
+    <div *ngIf="negociacionesAEnviar.length !== 0"   (click)="enviarProgramaciones()" class="btn btn-outline-danger col-md-2 col-4 me-0">Enviar</div>
   </div>
 
 </div>
