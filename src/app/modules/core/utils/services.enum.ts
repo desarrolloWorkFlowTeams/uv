@@ -1,5 +1,5 @@
 export enum ServicesEnum {
-  volqueta ,
-  grua,
-  maquina
+  volqueta= 'volqueta' ,
+  grua = "grua",
+  maquina = "maquina"
 }

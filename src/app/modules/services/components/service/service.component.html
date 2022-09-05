@@ -1,10 +1,9 @@
-<h3 class="text-center mb-5 titulo">Servicio Volquetas</h3>
+<h3 class="text-center mb-5 titulo">Servicio {{path | titlecase}}</h3>
 
 <div class="container">
 
-  <form [formGroup]="programForm" (ngSubmit)="newProgram()" class="row border rounded">
-
-    <div class="mt-3 col-6 col-md-3">
+  <form [formGroup]="programForm" (ngSubmit)="newProgram()" class="row d-flex justify-content-around border rounded">
+    <div [ngClass]="path === servicesEnum.volqueta?'mt-3 col-6 col-md-3': (path === servicesEnum.grua? 'mt-3 col-6 col-md-2':'mt-3 col-6')">
       <label for="exampleDataList1" class="form-label"><strong>Obra</strong></label>
       <input autocomplete="off" class="form-control" list="datalistOptions1" id="exampleDataList1" name="obra" placeholder="Buscar Obra..." formControlName="obra" (ngModelChange)="negociacionSeleccionada($event)">
       <datalist id="datalistOptions1">
@@ -12,7 +11,7 @@
       </datalist>
     </div>
 
-    <div class="mt-3 col-6 col-md-3">
+    <div [ngClass]="path === servicesEnum.volqueta?'mt-3 col-6 col-md-3': (path === servicesEnum.grua? 'mt-3 col-6 col-md-2':'mt-3 col-6')" *ngIf="path !== servicesEnum.grua">
       <label for="exampleDataList2" class="form-label"><strong>Material</strong></label>
       <input autocomplete="off" class="form-control" list="datalistOptions2" id="exampleDataList2" name="material" placeholder="Buscar Material..." formControlName="material" (change)="traerPlacas($event)" >
       <datalist id="datalistOptions2" >
@@ -20,7 +19,7 @@
       </datalist>
     </div>
 
-    <div class="mt-3 col-4 col-md-2">
+    <div class="mt-3 col-4 col-md-2" *ngIf="path !== servicesEnum.maquina">
       <label for="exampleDataList3" class="form-label"><strong>Placa</strong></label>
       <input autocomplete="off" class="form-control" list="datalistOptions3" id="exampleDataList3" name="placa" placeholder="Buscar Placa..." formControlName="placa">
       <datalist id="datalistOptions3">
@@ -28,12 +27,12 @@
       </datalist>
     </div>
 
-    <div class="mt-3 col-4 col-md-2">
+    <div class="mt-3 col-4 col-md-2" *ngIf="path !== servicesEnum.maquina">
       <label for="exampleFormControlInput1" class="form-label"><strong>Origen</strong></label>
       <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Origen" name="origen"  formControlName="origen">
     </div>
 
-    <div class="mt-3 col-4 col-md-2">
+    <div class="mt-3 col-4 col-md-2" *ngIf="path !== servicesEnum.maquina">
       <label for="exampleFormControlInput2" class="form-label"><strong>Destino</strong></label>
       <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Destino" name="destino"  formControlName="destino">
     </div>
@@ -49,7 +48,7 @@
   </div>
 
   <div class="row justify-content-between mt-5 mb-5 mx-5">
-    <a [routerLink]="['/services']" class="btn btn-outline-primary col-md-2 col-4">Regresar</a>
+    <a [routerLink]="['..']" class="btn btn-outline-primary col-md-2 col-4">Regresar</a>
     <div *ngIf="negociacionesAEnviar.length !== 0" (click)="enviarProgramaciones()" class="btn btn-outline-danger col-md-2 col-4">Enviar</div>
   </div>
 

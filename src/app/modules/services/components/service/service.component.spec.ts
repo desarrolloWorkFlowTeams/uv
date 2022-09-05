@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VolquetaComponent } from './volqueta.component';
+import { ServiceComponent } from './service.component';
 
 describe('VolquetaComponent', () => {
-  let component: VolquetaComponent;
-  let fixture: ComponentFixture<VolquetaComponent>;
+  let component: ServiceComponent;
+  let fixture: ComponentFixture<ServiceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VolquetaComponent ]
+      declarations: [ ServiceComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VolquetaComponent);
+    fixture = TestBed.createComponent(ServiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

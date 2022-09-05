@@ -10,7 +10,7 @@ import {CrmService} from "./services/crm.service";
   ],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [AuthService, CrmService],
 })
