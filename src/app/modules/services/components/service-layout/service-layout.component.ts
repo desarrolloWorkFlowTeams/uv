@@ -56,5 +56,4 @@ export class ServiceLayoutComponent implements OnInit {
     }
     this.router.navigate(['/services/'+this.servicesForm.value.service], {queryParams}).then()
   }
-
 }
