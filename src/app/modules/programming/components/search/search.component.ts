@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CrmService} from "../../../core/services/crm.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -7,16 +9,24 @@ import {CrmService} from "../../../core/services/crm.service";
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-
+  searchForm!: FormGroup;
   id:string= "265";
   placas: any[] =[];
   deals: any [] = [];
   state = 'C7:PREPARATION';
-  constructor(private readonly crm: CrmService) {
+  campos: any = {};
+  constructor(
+    private readonly crm: CrmService,
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router
+    ) {
   }
 
   ngOnInit(): void {
-
+    this.campos = {
+      placa: ['', [Validators.required]],
+    }
+    this.searchForm = this.formBuilder.group(this.campos)
     this.traerPlacas();
     // this.crm.getDealForId('crm.deal.get', '1483').subscribe({
     //   'next': (deal: any) => {
@@ -73,6 +83,10 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  searchRequest() {
+    console.log(this.searchForm.value);
+    this.router.navigate(['/programming/result-search'], {queryParams: { placa: this.searchForm.value.placa }}).then()
+  }
 }
 // UF_CRM_1659706567283
 // STAGE_ID: C7:PREPARATION

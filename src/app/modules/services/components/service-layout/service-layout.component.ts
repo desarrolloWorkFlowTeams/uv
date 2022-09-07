@@ -40,7 +40,8 @@ export class ServiceLayoutComponent implements OnInit {
             id: 265,
             service: 63,
           }
-        break;case ServicesEnum.grua:
+        break;
+          case ServicesEnum.grua:
           queryParams= {
             embudo: 3,
             id: 265,
@@ -50,7 +51,7 @@ export class ServiceLayoutComponent implements OnInit {
           queryParams= {
             embudo: 9,
             id: 289,
-            service: 65 ,
+            service: 65,
           }
         break;
     }
