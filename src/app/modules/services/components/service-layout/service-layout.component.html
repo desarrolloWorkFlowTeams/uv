@@ -1,15 +1,19 @@
 <div class="container">
   <h3 class="text-center titulo mb-5">Seleccionar Sevicio</h3>
-  <form [formGroup]="servicesForm" (ngSubmit)="goToProgrammingModule()" class="col-6 mx-auto my-auto py-auto form-color p-3">
-    <div class="input-group">
-      <span class="input-group-text" id="inputGroup-sizing-default">Servicio</span>
-      <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon" formControlName="service">
-        <option selected>Seleccione un servicio </option>
-        <option *ngFor="let service of services" [ngValue]="service.code">{{service.value}}</option>
-      </select>
-      <button class="btn btn-outline-danger" type="submit">Enviar</button>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6">
+      <form [formGroup]="servicesForm" (ngSubmit)="goToProgrammingModule()" class="form-color p-3">
+        <div class="input-group">
+          <span class="input-group-text" id="inputGroup-sizing-default">Servicio</span>
+          <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon" formControlName="service">
+            <option selected>Seleccione un servicio </option>
+            <option *ngFor="let service of services" [ngValue]="service.code">{{service.value}}</option>
+          </select>
+          <button class="btn btn-outline-danger" type="submit">Enviar</button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
   <div class="row justify-content-center mt-5">
     <button [routerLink]="['/']" class="btn btn-outline-primary mt-3 col-6 col-md-2"
       type="submit">Regresar</button>
