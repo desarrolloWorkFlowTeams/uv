@@ -1,40 +1,82 @@
 <div class="container">
-   <h3 class="titulo text-center">Detalle de la negociacion</h3>
-   <div class="row justify-content-center mt-5">
-      <div class="col-12 col-md-8">
+  <h3 class="titulo text-center">Actualizar Programación</h3>
+  <div class="row justify-content-center mt-5">
+    <div class="col-12 col-md-8">
+      <form action="">
+        <label class="form-label" for="image"
+          ><strong> Foto de Recibo</strong></label
+        >
+        <input
+          type="file"
+          name="archivosubido"
+          class="form-control"
+          id="image"
+        />
 
-         <form action="">
-            <label class="form-label" for=""><strong> Foto de Recibo</strong></label>
-            <input type="file" name="archivosubido" class="form-control">
+        <div class="input-group mt-3">
+          <span class="input-group-text" id="basic-addon1"
+            >Numero De Recibo</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-label="factura"
+            aria-describedby="basic-addon1"
+          />
+        </div>
 
-            <div class="input-group mt-3">
-               <span class="input-group-text" id="basic-addon1">Numero De Recibo</span>
-               <input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
+        <div
+          class="input-group mt-3"
+          *ngIf="showInput(embudo, 'horometroInicial')"
+        >
+          <span class="input-group-text" id="basic-addon2"
+            >Horometro Inicial</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-label="Horometro Inicial"
+            aria-describedby="basic-addon1"
+          />
+        </div>
 
-            <div class="input-group mt-3">
-               <span class="input-group-text" id="basic-addon1">Horometro Inicial</span>
-               <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
+        <div
+          class="input-group mt-3"
+          *ngIf="showInput(embudo, 'horometroFinal')"
+        >
+          <span class="input-group-text" id="basic-addon3"
+            >Horometro Final</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+        </div>
 
-            <div class="input-group mt-3">
-               <span class="input-group-text" id="basic-addon1">Horometro Final</span>
-               <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-
-            <div class="input-group mt-3">
-               <span class="input-group-text" id="basic-addon1">Cantidad</span>
-               <input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-
-            <div class="row d-flex justify-content-around mt-5 mb-5">
-               <a [routerLink]="['/programming/result-search']" class="btn btn-outline-primary col-4 col-md-3">Regresar</a>
-               <a [routerLink]="['']" class="btn btn-outline-danger col-4 col-md-3">Enviar</a>
-            </div>
-
-         </form>
-
-      </div>
-   </div>
+        <div class="input-group mt-3" *ngIf="showInput(embudo, 'cantidad')">
+          <span class="input-group-text" id="basic-addon4">Cantidad</span>
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+        <div class="row justify-content-between mt-5 mb-5 mx-1">
+          <a
+            [routerLink]="['/programming/result-search']"
+            [queryParams]="{ placa: placa }"
+            class="btn btn-outline-primary col-4 col-md-3"
+            >Regresar</a
+          >
+          <a [routerLink]="['']" class="btn btn-outline-danger col-4 col-md-3"
+            >Enviar</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
 
 </div>

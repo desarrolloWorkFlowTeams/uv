@@ -33,8 +33,7 @@ export class ServiceComponent implements OnInit {
     private readonly crm: CrmService,
     private readonly router: Router,
     private toastr: ToastrService,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(param => {
@@ -107,7 +106,6 @@ export class ServiceComponent implements OnInit {
       this.programForm.reset();
       this.getDataNegotiation();
     }
-
   }
 
   negociacionSeleccionada(event?: any) {
@@ -118,7 +116,6 @@ export class ServiceComponent implements OnInit {
         }
       });
     }
-
   }
 
   actualizarNegociacionesAEnviar(event: any) {
