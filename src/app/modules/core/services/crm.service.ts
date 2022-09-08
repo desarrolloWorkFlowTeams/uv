@@ -72,4 +72,41 @@ export class CrmService {
     }
     return this.http.post(`${this.crm}/crm.deal.productrows.set`, body);
   }
+
+  actualizarProgramacion(id: string, programationUpdate: any, embudo: string) {
+
+    let fields: any;
+
+    if (embudo === "9") {
+      fields = {
+        UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
+        UF_CRM_1654627704711: `${programationUpdate.horometroInicial}`,
+        UF_CRM_1654627722206: `${programationUpdate.horometroFinal}`,
+        UF_CRM_1654627437663: `${programationUpdate.cantidad}`,
+        STAGE_ID: `${programationUpdate.etapa}`,
+      }
+    }
+    if (embudo === "7") {
+      fields = {
+        UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
+        UF_CRM_1654627437663: `${programationUpdate.cantidad}`,
+        STAGE_ID: `${programationUpdate.etapa}`,
+      }
+    }
+    if (embudo === "3") {
+      fields = {
+        UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
+        STAGE_ID: `${programationUpdate.etapa}`,
+      }
+    }
+
+    const body = {
+      id,
+      fields
+    }
+    console.log({body})
+    return this.http.post(`${this.crm}/crm.deal.update`, body);
+    
+  }
+
 }
