@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
-import { CrmService } from 'src/app/modules/core/services/crm.service';
-import { ToastrService } from 'ngx-toastr';
+import {CrmService} from 'src/app/modules/core/services/crm.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-negotiation-in-progress',
@@ -17,6 +17,9 @@ export class NegotiationInProgressComponent implements OnInit {
   public embudo: string = '';
   campos: any = {};
   programationUpdate: any = {};
+  file!: File;
+  private detailUrl: string = '';
+
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -24,7 +27,7 @@ export class NegotiationInProgressComponent implements OnInit {
     private readonly crm: CrmService,
     private toastr: ToastrService,
     private readonly router: Router,
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -72,30 +75,44 @@ export class NegotiationInProgressComponent implements OnInit {
         break;
       case '9':
         // Maquina
-          show = true;
+        show = true;
         break;
     }
     return show;
   }
 
   saveProgramationUpdate() {
-    this.programationUpdate = this.updateProgramForm.value;
-    this.programationUpdate['etapa'] = `C${this.embudo}:PREPARATION`;
-    let i = 0;
     if (this.updateProgramForm.valid) {
-      this.crm.actualizarProgramacion(this.idProgrammation, this.programationUpdate, this.embudo).subscribe({
-        'next': (programUpdate: any) => {
-          console.log('programResult ' + i + ' => ', programUpdate)
-          if(programUpdate) this.toastr.success('Programacion '+ this.idProgrammation +' actualizada exitosamente!', 'Bien!');
-        },
-        'error': err => {
-          console.log('programResult ' + i + ' => ', err);
-          if(err) this.toastr.error('Algo salio mal!', 'Error!');
+      this.crm.uploadImage2().subscribe((value: any) => {
+        if (value) {
+          this.crm.uploadImage(value?.result.uploadUrl, this.file).subscribe((value2: any) => {
+            if (value2) {
+              this.crm.showImage(Number(value2.result.ID)).subscribe((value3: any) => {
+                if (value3) {
+                  this.detailUrl = value3.result
+                  this.programationUpdate = this.updateProgramForm.value;
+                  this.programationUpdate['etapa'] = `C${this.embudo}:PREPARATION`;
+
+                  this.crm.actualizarProgramacion(this.idProgrammation, this.programationUpdate, this.embudo, this.detailUrl).subscribe({
+                    'next': (programUpdate: any) => {
+                      if (programUpdate) this.toastr.success('¡Programacion ' + this.idProgrammation + ' actualizada exitosamente!', '¡Bien!');
+                    },
+                    'error': err => {
+                      if (err) this.toastr.error('¡Algo salio mal!', '¡Error!');
+                    }
+                  });
+                  this.router.navigate(['/programming']).then();
+                }
+              })
+            }
+          })
         }
-      });
-      console.log('Campos del formulario: ', this.programationUpdate);
-      this.router.navigate(['/programming']).then();
+      })
     }
+  }
+
+  uploadFileEvt(imgFile: any) {
+    this.file = imgFile.target.files[0];
   }
 
 }

@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as $ from 'jquery';
 import {ServicesEnum} from "../../../core/utils/services.enum";
 import { ToastrService } from 'ngx-toastr';
+import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 
 @Component({
   selector: 'volqueta',
@@ -95,14 +96,10 @@ export class ServiceComponent implements OnInit {
 
   newProgram() {
     if (this.programForm.valid) {
-      console.log('_____Values form______', this.programForm.value);
       let program = this.programForm.value;
       program.customId = this.negociacionesAEnviar.length + 1;
       program.producto = this.productSelected[0];
-      console.log("Id Material : ", this.programForm.value.material);
-      console.log("Materiales : ", this.materiales);
       this.negociacionesAEnviar.push(program);
-      console.log("Negociaciones a enviar: ", this.negociacionesAEnviar);
       this.programForm.reset();
       this.getDataNegotiation();
     }
@@ -128,7 +125,6 @@ export class ServiceComponent implements OnInit {
       this.productSelected = this.materiales.filter(
         product => product.PRODUCT_NAME === event.target.value
       );
-      console.log('productSelected', this.productSelected)
     }
     let options = {
       filter: {'UF_CRM_1659061343591': `${this.id}`},
@@ -142,7 +138,6 @@ export class ServiceComponent implements OnInit {
   }
 
   async enviarProgramaciones() {
-    console.log("Programaciones a enviar: ", this.negociacionesAEnviar);
     let i = 0;
     if(this.negociacionesAEnviar.length!==0){
       while (i < this.negociacionesAEnviar.length) {
@@ -158,25 +153,20 @@ export class ServiceComponent implements OnInit {
                 QUANTITY: this.negociacionesAEnviar[i].producto.QUANTITY
               }
             ]
-            console.log({row});
-            console.log('____idNegociacion____',idNegociacion.result)
             this.crm.agregarProductosANuevaProgramacion(`${idNegociacion.result}`, row).subscribe({
               'next': (productResult: any) => {
-                console.log('productResult ' + i + ' => ', productResult);
-                if(productResult) this.toastr.success('Nueva programacion '+ idNegociacion.result +' creada exitosamente!', 'Bien!');
+                if(productResult) this.toastr.success('¡Nueva programacion '+ idNegociacion.result +' creada exitosamente!', '¡Bien!');
               },
               'error': error => {
-                console.log('productResult ' + i + ' => ', error);
-                if(error) this.toastr.error('Algo salio mal!', 'Error!');
+                if(error) this.toastr.error('¡Algo salio mal!', '¡Error!');
               },
             })
           }else{
-            this.toastr.success('Nueva programacion '+ idNegociacion.result +' creada exitosamente!', 'Bien!');
+            this.toastr.success('¡Nueva programacion '+ idNegociacion.result +' creada exitosamente!', '¡Bien!');
           }
 
         }else{
-          console.log('____else____',idNegociacion.result)
-          this.toastr.error('Algo salio mal!', 'Error!');
+          this.toastr.error('¡Algo salio mal!', '¡Error!');
         }
         i++;
       }

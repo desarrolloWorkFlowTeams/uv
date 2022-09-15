@@ -40,15 +40,15 @@ export class CrmService {
 
   enviarProgramacion(service: string, programacion: any, embudo: string) {
 
-    if(!programacion && !embudo) return;
+    if (!programacion && !embudo) return;
 
     let fields: any = {
-        TITLE: `${programacion.obra}`,
-        CATEGORY_ID: `${embudo}`,
-        UF_CRM_1659706553211: `${programacion.obra}`,
+      TITLE: `${programacion.obra}`,
+      CATEGORY_ID: `${embudo}`,
+      UF_CRM_1659706553211: `${programacion.obra}`,
     }
 
-    if(service === ServicesEnum.grua || service === ServicesEnum.volqueta){
+    if (service === ServicesEnum.grua || service === ServicesEnum.volqueta) {
       fields = {
         TITLE: `${programacion.obra}`,
         CATEGORY_ID: `${embudo}`,
@@ -59,9 +59,8 @@ export class CrmService {
       }
     }
 
-    const body = { fields }
+    const body = {fields}
 
-    console.log({body})
     return this.http.post(`${this.crm}/crm.deal.add`, body).toPromise();
   }
 
@@ -73,16 +72,17 @@ export class CrmService {
     return this.http.post(`${this.crm}/crm.deal.productrows.set`, body);
   }
 
-  actualizarProgramacion(id: string, programationUpdate: any, embudo: string) {
+  actualizarProgramacion(id: string, programationUpdate: any, embudo: string, image: string) {
 
     let fields: any;
-
     if (embudo === "9") {
       fields = {
         UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
         UF_CRM_1654627704711: `${programationUpdate.horometroInicial}`,
         UF_CRM_1654627722206: `${programationUpdate.horometroFinal}`,
         UF_CRM_1654627437663: `${programationUpdate.cantidad}`,
+        // UF_CRM_1655990970100: // image,
+        UF_CRM_1663029727124: image,
         STAGE_ID: `${programationUpdate.etapa}`,
       }
     }
@@ -90,12 +90,16 @@ export class CrmService {
       fields = {
         UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
         UF_CRM_1654627437663: `${programationUpdate.cantidad}`,
+        // UF_CRM_1655990970100: // image,
+        UF_CRM_1663029727124: image,
         STAGE_ID: `${programationUpdate.etapa}`,
       }
     }
     if (embudo === "3") {
       fields = {
         UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
+        // UF_CRM_1655990970100: // image,
+        UF_CRM_1663029727124: image,
         STAGE_ID: `${programationUpdate.etapa}`,
       }
     }
@@ -104,9 +108,24 @@ export class CrmService {
       id,
       fields
     }
-    console.log({body})
     return this.http.post(`${this.crm}/crm.deal.update`, body);
-    
+
+  }
+
+  uploadImage(url:string, file: File) {
+    let body = new FormData();
+    body.append('file', file)
+    return this.http.post(`${url}`, body)
+  }
+
+  uploadImage2() {
+    let body = {id: 3};
+    return this.http.post(`${this.crm}/disk.folder.uploadFile?id=289`, body);
+  }
+
+  showImage(id:number){
+    let body = {id: id}
+    return this.http.post(`${this.crm}/disk.file.getExternalLink`, body);
   }
 
 }

@@ -6,12 +6,11 @@
         <label class="form-label" for="image"
           ><strong> Foto de Recibo</strong></label
         >
-        <input
-          type="file"
-          name="archivo"
-          class="form-control"
-          id="image"
-        />
+        <div class="mb-3">
+          <label for="image">Course image</label>
+          <input type="file" class="form-control" id="image" placeholder="image course"
+                 (change)="uploadFileEvt($event)">
+        </div>
 
         <div class="input-group mt-3">
           <span class="input-group-text" id="basic-addon1"
