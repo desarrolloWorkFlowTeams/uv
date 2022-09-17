@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CrmService} from "../../../core/services/crm.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search',
@@ -56,7 +57,15 @@ export class SearchComponent implements OnInit {
   searchRequest() {
     if (this.searchForm.valid) {
       this.router.navigate(['/programming/result-search'], {queryParams: {placa: this.searchForm.value.placa}}).then()
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Porfavor seleccione una placa!',
+        // footer: '<a href="">Why do I have this issue?</a>'
+      })
     }
   }
+
 }
 

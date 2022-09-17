@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {CrmService} from "../../../core/services/crm.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { CrmService } from "../../../core/services/crm.service";
 
 @Component({
   selector: 'app-result-search',
@@ -36,8 +36,9 @@ export class ResultSearchComponent implements OnInit {
         this.negociaciones = [];
         this.negociaciones = deals.result;
         console.log(this.negociaciones[0].STAGE_ID.split(':')[1]);
-        this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID.split(':')[1].toLowerCase() === 'new')
-
+        // this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID.split(':')[1].toLowerCase() === 'new')
+        this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID === "C7:NEW" || negociacion.STAGE_ID === "C3:NEW" || negociacion.STAGE_ID === "C9:NEW")
+        console.log('Programaciones: ', this.negociaciones)
       },
       'error': err => console.log(err)
     })

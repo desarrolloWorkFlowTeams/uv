@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CrmService} from 'src/app/modules/core/services/crm.service';
 import {ToastrService} from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-negotiation-in-progress',
@@ -40,6 +41,7 @@ export class NegotiationInProgressComponent implements OnInit {
 
     if (this.embudo === "9") {
       this.campos = {
+        fotoRecibo: ['', [Validators.required]],
         numRecibo: ['', [Validators.required]],
         horometroInicial: ['', [Validators.required]],
         horometroFinal: ['', [Validators.required]],
@@ -48,12 +50,14 @@ export class NegotiationInProgressComponent implements OnInit {
     }
     if (this.embudo === "7") {
       this.campos = {
+        fotoRecibo: ['', [Validators.required]],
         numRecibo: ['', [Validators.required]],
         cantidad: ['', [Validators.required]]
       }
     }
     if (this.embudo === "3") {
       this.campos = {
+        fotoRecibo: ['', [Validators.required]],
         numRecibo: ['', [Validators.required]]
       }
     }
@@ -107,6 +111,13 @@ export class NegotiationInProgressComponent implements OnInit {
             }
           })
         }
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Porfavor llene todos los campos!',
+        // footer: '<a href="">Why do I have this issue?</a>'
       })
     }
   }

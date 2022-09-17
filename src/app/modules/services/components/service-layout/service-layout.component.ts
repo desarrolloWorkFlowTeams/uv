@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ServicesEnum} from "../../../core/utils/services.enum";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-service-layout',
@@ -31,7 +32,15 @@ export class ServiceLayoutComponent implements OnInit {
 
 
   goToProgrammingModule() {
-    if (!this.servicesForm.valid) return;
+    if (!this.servicesForm.valid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Porfavor seleccione un servicio!',
+        // footer: '<a href="">Why do I have this issue?</a>'
+      })
+      return;
+    }
     let queryParams = {};
     switch (this.servicesForm.value.service) {
       case ServicesEnum.volqueta:
@@ -57,4 +66,5 @@ export class ServiceLayoutComponent implements OnInit {
     }
     this.router.navigate(['/services/'+this.servicesForm.value.service], {queryParams}).then()
   }
+
 }

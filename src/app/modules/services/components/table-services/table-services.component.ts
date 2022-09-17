@@ -13,12 +13,24 @@ export class TableServicesComponent implements OnInit {
   @Output() nuevasNegociaciones = new EventEmitter();
   path = '';
   servicesEnum = ServicesEnum;
+  embudoId = "";
+  campoTabla = "";
   constructor( private readonly route: ActivatedRoute,) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(param => {
       this.path = param['service'];
     })
+
+    this.route.queryParams.subscribe(query => {
+      this.embudoId = query['embudo'];
+    })
+
+    if (this.embudoId !== "9") {
+      this.campoTabla = "Placa";
+    } else {
+      this.campoTabla = "Equipo";
+    }
   }
 
   eliminarProgramacion(id: number){
