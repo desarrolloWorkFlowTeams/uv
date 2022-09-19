@@ -10,7 +10,7 @@
           <input autocomplete="off" class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa"
             placeholder="Seleccione una placa" formControlName="placa">
           <datalist id="datalistOptions3">
-            <option *ngFor="let placa of placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
+            <option *ngFor="let placa of placas" [ngValue]="placa">{{placa}}</option>
           </datalist>
           <button class="btn btn-outline-danger" type="submit">Enviar</button>
         </div>
