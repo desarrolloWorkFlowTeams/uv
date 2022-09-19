@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import Swal from 'sweetalert2';
 import { CrmService } from "../../../core/services/crm.service";
 
 @Component({
@@ -14,6 +15,7 @@ export class ResultSearchComponent implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly crm: CrmService,
+    private readonly router: Router
   ) {
   }
 
@@ -35,10 +37,17 @@ export class ResultSearchComponent implements OnInit {
       'next': (deals: any) => {
         this.negociaciones = [];
         this.negociaciones = deals.result;
-        console.log(this.negociaciones[0].STAGE_ID.split(':')[1]);
-        // this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID.split(':')[1].toLowerCase() === 'new')
-        this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID === "C7:NEW" || negociacion.STAGE_ID === "C3:NEW" || negociacion.STAGE_ID === "C9:NEW")
-        console.log('Programaciones: ', this.negociaciones)
+        if (this.negociaciones.length > 0) {
+          this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID === "C7:NEW" || negociacion.STAGE_ID === "C3:NEW" || negociacion.STAGE_ID === "C9:NEW")
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '¡No hay programaciones, seleccione otra placa!',
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
+          this.router.navigate(['/programming']);
+        }
       },
       'error': err => console.log(err)
     })
