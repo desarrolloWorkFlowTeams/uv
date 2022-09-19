@@ -6,19 +6,19 @@
         <tr>
           <th scope="col">Obra</th>
           <th scope="col" *ngIf="this.path !== servicesEnum.grua">Material</th>
-          <th scope="col" *ngIf="this.path !== servicesEnum.maquina">Placa</th>
-          <th scope="col">Origen</th>
-          <th scope="col" *ngIf="this.path !== servicesEnum.maquina">Destino</th>
-          <th scope="col" *ngIf="this.path !== servicesEnum.maquina">Acción</th>
+          <th scope="col">{{campoTabla}}</th>
+          <th scope="col" *ngIf="this.path == servicesEnum.grua">Origen</th>
+          <th scope="col" *ngIf="this.path == servicesEnum.grua">Destino</th>
+          <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody *ngFor="let negociacion of negociaciones">
         <tr>
           <td class="text-nowrap" scope="row">{{negociacion.obra}}</td>
           <td class="text-nowrap" *ngIf="this.path !== servicesEnum.grua">{{negociacion.material}}</td>
-          <td class="text-nowrap" *ngIf="this.path !== servicesEnum.maquina">{{negociacion.placa}}</td>
-          <td class="text-nowrap" *ngIf="this.path !== servicesEnum.maquina">{{negociacion.origen}}</td>
-          <td class="text-nowrap" *ngIf="this.path !== servicesEnum.maquina">{{negociacion.destino}}</td>
+          <td class="text-nowrap">{{negociacion.placa}}</td>
+          <td class="text-nowrap" *ngIf="this.path == servicesEnum.grua">{{negociacion.origen}}</td>
+          <td class="text-nowrap" *ngIf="this.path == servicesEnum.grua">{{negociacion.destino}}</td>
           <td>
             <div class="row mx-0 px-0">
               <button (click)="eliminarProgramacion(negociacion.customId)" class="btn btn-outline-danger col-auto">

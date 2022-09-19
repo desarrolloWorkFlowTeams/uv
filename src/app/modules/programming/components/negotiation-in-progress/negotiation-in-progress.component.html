@@ -2,14 +2,22 @@
   <h3 class="titulo text-center">Actualizar Programación</h3>
   <div class="row justify-content-center mt-5">
     <div class="col-12 col-md-8">
-      <form [formGroup]="updateProgramForm" (ngSubmit)="saveProgramationUpdate()">
+      <form
+        [formGroup]="updateProgramForm"
+        (ngSubmit)="saveProgramationUpdate()"
+      >
         <label class="form-label" for="image"
           ><strong> Foto de Recibo</strong></label
         >
         <div class="mb-3">
-          <label for="image">Course image</label>
-          <input type="file" class="form-control" id="image" placeholder="image course"
-                 (change)="uploadFileEvt($event)">
+          <input
+            type="file"
+            name="fotoRecibo"
+            formControlName="fotoRecibo"
+            class="form-control"
+            id="image"
+            (change)="uploadFileEvt($event)"
+          />
         </div>
 
         <div class="input-group mt-3">
@@ -78,12 +86,14 @@
             class="btn btn-outline-primary col-4 col-md-3"
             >Regresar</a
           >
-          <button type="submit" class="btn btn-outline-danger col-4 col-md-3"
-            >Enviar</button
+          <button
+            type="submit"
+            class="btn btn-outline-danger col-4 col-md-3"
           >
+            Enviar
+          </button>
         </div>
       </form>
     </div>
   </div>
-
 </div>

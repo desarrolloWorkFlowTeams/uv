@@ -45,10 +45,11 @@ export class CrmService {
     let fields: any = {
       TITLE: `${programacion.obra}`,
       CATEGORY_ID: `${embudo}`,
+      UF_CRM_1659706567283: `${programacion.placa}`,
       UF_CRM_1659706553211: `${programacion.obra}`,
     }
 
-    if (service === ServicesEnum.grua || service === ServicesEnum.volqueta) {
+    if (service === ServicesEnum.grua) {
       fields = {
         TITLE: `${programacion.obra}`,
         CATEGORY_ID: `${embudo}`,

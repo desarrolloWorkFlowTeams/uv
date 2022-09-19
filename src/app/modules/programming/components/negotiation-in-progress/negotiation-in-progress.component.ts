@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from "@angular/router";
-import {CrmService} from 'src/app/modules/core/services/crm.service';
-import {ToastrService} from 'ngx-toastr';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from "@angular/router";
+import { CrmService } from 'src/app/modules/core/services/crm.service';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-negotiation-in-progress',
@@ -19,7 +20,7 @@ export class NegotiationInProgressComponent implements OnInit {
   programationUpdate: any = {};
   file!: File;
   private detailUrl: string = '';
-
+  rowsProducts: any[] = [];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -40,6 +41,7 @@ export class NegotiationInProgressComponent implements OnInit {
 
     if (this.embudo === "9") {
       this.campos = {
+        fotoRecibo: ['', [Validators.required]],
         numRecibo: ['', [Validators.required]],
         horometroInicial: ['', [Validators.required]],
         horometroFinal: ['', [Validators.required]],
@@ -48,17 +50,26 @@ export class NegotiationInProgressComponent implements OnInit {
     }
     if (this.embudo === "7") {
       this.campos = {
+        fotoRecibo: ['', [Validators.required]],
         numRecibo: ['', [Validators.required]],
         cantidad: ['', [Validators.required]]
       }
     }
     if (this.embudo === "3") {
       this.campos = {
+        fotoRecibo: ['', [Validators.required]],
         numRecibo: ['', [Validators.required]]
       }
     }
 
     this.updateProgramForm = this.formBuilder.group(this.campos)
+
+    this.crm.getDealProductList(this.idProgrammation).subscribe((valueProducts: any) => {
+      if (valueProducts) {
+        this.rowsProducts.push(valueProducts.result[0]);
+      }
+    });
+    console.log('Producto de Negociacion: ', this.rowsProducts);
 
   }
 
@@ -95,6 +106,17 @@ export class NegotiationInProgressComponent implements OnInit {
 
                   this.crm.actualizarProgramacion(this.idProgrammation, this.programationUpdate, this.embudo, this.detailUrl).subscribe({
                     'next': (programUpdate: any) => {
+                      if (this.embudo !== "3") {
+                        const rowsProductsSend = [
+                          {
+                            PRODUCT_ID: this.rowsProducts[0].PRODUCT_ID,
+                            PRICE: this.rowsProducts[0].PRICE,
+                            QUANTITY: this.updateProgramForm.value.cantidad
+                          }
+                        ]
+
+                        this.crm.agregarProductosANuevaProgramacion(this.idProgrammation, rowsProductsSend).subscribe();
+                      }
                       if (programUpdate) this.toastr.success('¡Programacion ' + this.idProgrammation + ' actualizada exitosamente!', '¡Bien!');
                     },
                     'error': err => {
@@ -107,6 +129,13 @@ export class NegotiationInProgressComponent implements OnInit {
             }
           })
         }
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Porfavor llene todos los campos!',
+        // footer: '<a href="">Why do I have this issue?</a>'
       })
     }
   }

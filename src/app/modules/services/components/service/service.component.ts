@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as $ from 'jquery';
 import {ServicesEnum} from "../../../core/utils/services.enum";
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 
 @Component({
@@ -27,6 +28,8 @@ export class ServiceComponent implements OnInit {
   productSelected: any[] = [];
   path = '';
   servicesEnum = ServicesEnum;
+  nomLabel = "";
+  valuePlaceholder = "";
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -48,13 +51,19 @@ export class ServiceComponent implements OnInit {
       this.embudoId = query['embudo'];
     })
 
+    if (this.embudoId !== "9") {
+      this.nomLabel = "Placa";
+      this.valuePlaceholder = "Buscar placa..."
+    } else {
+      this.nomLabel = "Equipo";
+      this.valuePlaceholder = "Buscar equipo..."
+    }
+
     if (this.path === ServicesEnum.volqueta) {
       this.campos = {
         obra: ['', [Validators.required]],
         material: ['', [Validators.required]],
         placa: ['', [Validators.required]],
-        origen: ['', [Validators.required]],
-        destino: ['', [Validators.required]],
       }
     }
 
@@ -71,6 +80,7 @@ export class ServiceComponent implements OnInit {
       this.campos = {
         obra: ['', [Validators.required]],
         material: ['', [Validators.required]],
+        placa: ['', [Validators.required]],
       }
     }
 
@@ -102,6 +112,13 @@ export class ServiceComponent implements OnInit {
       this.negociacionesAEnviar.push(program);
       this.programForm.reset();
       this.getDataNegotiation();
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Porfavor llene todos los campos!',
+        // footer: '<a href="">Why do I have this issue?</a>'
+      })
     }
   }
 
@@ -174,6 +191,5 @@ export class ServiceComponent implements OnInit {
 
     this.router.navigate(['/services']).then()
   }
-
 
 }

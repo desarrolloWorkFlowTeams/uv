@@ -10,17 +10,12 @@
           <input autocomplete="off" class="form-control" list="datalistOptions3" id="exampleDataList2" name="placa"
             placeholder="Seleccione una placa" formControlName="placa">
           <datalist id="datalistOptions3">
-            <option *ngFor="let placa of placas" [ngValue]="placa.TITLE">{{placa.TITLE}}</option>
+            <option *ngFor="let placa of placas" [ngValue]="placa">{{placa}}</option>
           </datalist>
           <button class="btn btn-outline-danger" type="submit">Enviar</button>
         </div>
       </div>
     </div>
   </form>
-
-  <div class="row justify-content-center mt-5">
-    <button [routerLink]="['/']" class="btn btn-outline-primary mt-3 col-6 col-md-2"
-      type="submit">Regresar</button>
-  </div>
 
 </div>
