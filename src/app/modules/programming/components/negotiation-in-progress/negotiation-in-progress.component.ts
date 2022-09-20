@@ -69,7 +69,6 @@ export class NegotiationInProgressComponent implements OnInit {
         this.rowsProducts.push(valueProducts.result[0]);
       }
     });
-    console.log('Producto de Negociacion: ', this.rowsProducts);
 
   }
 
@@ -144,7 +143,6 @@ export class NegotiationInProgressComponent implements OnInit {
     let file: File = imgFile.target.files[0];
     const fileName = file.name.split('.');
     this.file = new File([imgFile.target.files[0]], `${fileName[0]} - ${new Date(Date.now()).valueOf()}.${fileName.pop()}`, {type: imgFile.target.files[0].type});
-    console.log(this.file)
   }
 
 }
