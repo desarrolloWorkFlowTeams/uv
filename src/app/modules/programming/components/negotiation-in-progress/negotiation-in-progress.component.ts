@@ -95,7 +95,8 @@ export class NegotiationInProgressComponent implements OnInit {
     if (this.updateProgramForm.valid) {
       this.crm.uploadImage2().subscribe((value: any) => {
         if (value) {
-          this.crm.uploadImage(value?.result.uploadUrl, this.file).subscribe((value2: any) => {
+          const file = this.newFile(this.file, this.updateProgramForm.value.numRecibo);
+          this.crm.uploadImage(value?.result.uploadUrl, file).subscribe((value2: any) => {
             if (value2) {
               this.crm.showImage(Number(value2.result.ID)).subscribe((value3: any) => {
                 if (value3) {
@@ -140,9 +141,13 @@ export class NegotiationInProgressComponent implements OnInit {
   }
 
   uploadFileEvt(imgFile: any) {
-    let file: File = imgFile.target.files[0];
+    this.file = imgFile.target.files[0];
+
+  }
+
+  newFile(file: File, nroFactura: string){
     const fileName = file.name.split('.');
-    this.file = new File([imgFile.target.files[0]], `${fileName[0]} - ${new Date(Date.now()).valueOf()}.${fileName.pop()}`, {type: imgFile.target.files[0].type});
+    return new File([file], `${nroFactura} - ${new Date(Date.now()).valueOf()}.${fileName.pop()}`, {type: file.type});
   }
 
 }
