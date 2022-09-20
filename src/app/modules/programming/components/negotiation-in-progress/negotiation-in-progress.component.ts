@@ -141,7 +141,10 @@ export class NegotiationInProgressComponent implements OnInit {
   }
 
   uploadFileEvt(imgFile: any) {
-    this.file = imgFile.target.files[0];
+    let file: File = imgFile.target.files[0];
+    const fileName = file.name.split('.');
+    this.file = new File([imgFile.target.files[0]], `${fileName[0]} - ${new Date(Date.now()).valueOf()}.${fileName.pop()}`, {type: imgFile.target.files[0].type});
+    console.log(this.file)
   }
 
 }
