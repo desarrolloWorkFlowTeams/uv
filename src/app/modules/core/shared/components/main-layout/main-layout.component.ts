@@ -7,7 +7,8 @@ import {environment} from "../../../../../../environments/environment";
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent implements OnInit {
-  logo= environment.logoUriVolquetas
+  logo= environment.logoUriVolquetas;
+  copyrightYear = new Date(Date.now()).getFullYear();
   constructor() { }
 
   ngOnInit(): void {
