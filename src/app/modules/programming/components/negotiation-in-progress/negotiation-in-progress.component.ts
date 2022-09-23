@@ -18,8 +18,9 @@ export class NegotiationInProgressComponent implements OnInit {
   public embudo: string = '';
   campos: any = {};
   programationUpdate: any = {};
-  file!: File;
-  private detailUrl: string = '';
+  files: any[] = [];
+  contador: number = 0;
+  private detailUrl: any[] = [];
   rowsProducts: any[] = [];
 
   constructor(
@@ -95,39 +96,44 @@ export class NegotiationInProgressComponent implements OnInit {
     if (this.updateProgramForm.valid) {
       this.crm.uploadImage2().subscribe((value: any) => {
         if (value) {
-          const file = this.newFile(this.file, this.updateProgramForm.value.numRecibo);
-          this.crm.uploadImage(value?.result.uploadUrl, file).subscribe((value2: any) => {
-            if (value2) {
-              this.crm.showImage(Number(value2.result.ID)).subscribe((value3: any) => {
-                if (value3) {
-                  this.detailUrl = value3.result
-                  this.programationUpdate = this.updateProgramForm.value;
-                  this.programationUpdate['etapa'] = `C${this.embudo}:PREPARATION`;
+          for (let j = 0; j < this.files.length; j++) {
+            const file = this.newFile(this.files[j], this.updateProgramForm.value.numRecibo);
+            this.crm.uploadImage(value?.result.uploadUrl, file).subscribe((value2: any) => {
+              if (value2) {
+                this.crm.showImage(Number(value2.result.ID)).subscribe((value3: any) => {
+                  if (value3) {
+                    this.detailUrl.push(value3.result)
+                    this.contador += 1;
+                    if (this.contador == this.files.length) {
+                      this.programationUpdate = this.updateProgramForm.value;
+                      this.programationUpdate['etapa'] = `C${this.embudo}:PREPARATION`;
 
-                  this.crm.actualizarProgramacion(this.idProgrammation, this.programationUpdate, this.embudo, this.detailUrl).subscribe({
-                    'next': (programUpdate: any) => {
-                      if (this.embudo !== "3") {
-                        const rowsProductsSend = [
-                          {
-                            PRODUCT_ID: this.rowsProducts[0].PRODUCT_ID,
-                            PRICE: this.rowsProducts[0].PRICE,
-                            QUANTITY: this.updateProgramForm.value.cantidad
+                      this.crm.actualizarProgramacion(this.idProgrammation, this.programationUpdate, this.embudo, this.detailUrl).subscribe({
+                        'next': (programUpdate: any) => {
+                          if (this.embudo !== "3") {
+                            const rowsProductsSend = [
+                              {
+                                PRODUCT_ID: this.rowsProducts[0].PRODUCT_ID,
+                                PRICE: this.rowsProducts[0].PRICE,
+                                QUANTITY: this.updateProgramForm.value.cantidad
+                              }
+                            ]
+
+                            this.crm.agregarProductosANuevaProgramacion(this.idProgrammation, rowsProductsSend).subscribe();
                           }
-                        ]
-
-                        this.crm.agregarProductosANuevaProgramacion(this.idProgrammation, rowsProductsSend).subscribe();
-                      }
-                      if (programUpdate) this.toastr.success('¡Programacion ' + this.idProgrammation + ' actualizada exitosamente!', '¡Bien!');
-                    },
-                    'error': err => {
-                      if (err) this.toastr.error('¡Algo salio mal!', '¡Error!');
+                          if (programUpdate) this.toastr.success('¡Programacion ' + this.idProgrammation + ' actualizada exitosamente!', '¡Bien!');
+                        },
+                        'error': err => {
+                          if (err) this.toastr.error('¡Algo salio mal!', '¡Error!');
+                        }
+                      });
+                      this.router.navigate(['/programming']).then();
                     }
-                  });
-                  this.router.navigate(['/programming']).then();
-                }
-              })
-            }
-          })
+                  }
+                })
+              }
+            })
+          }
         }
       })
     } else {
@@ -141,13 +147,16 @@ export class NegotiationInProgressComponent implements OnInit {
   }
 
   uploadFileEvt(imgFile: any) {
-    this.file = imgFile.target.files[0];
-
+    const filesLoad = imgFile.target.files;
+    for (let i = 0; i < filesLoad.length; i++) {
+      this.files.push(filesLoad[i]);
+    }
+    console.log('Archivos: ', this.files);
   }
 
-  newFile(file: File, nroFactura: string){
+  newFile(file: File, nroFactura: string) {
     const fileName = file.name.split('.');
-    return new File([file], `${nroFactura} - ${new Date(Date.now()).valueOf()}.${fileName.pop()}`, {type: file.type});
+    return new File([file], `${nroFactura} - ${new Date(Date.now()).valueOf()}.${fileName.pop()}`, { type: file.type });
   }
 
 }
