@@ -45,6 +45,7 @@ export class CrmService {
     let fields: any = {
       TITLE: `${programacion.obra}`,
       CATEGORY_ID: `${embudo}`,
+      COMPANY_ID: `${programacion.idCompañia}`,
       UF_CRM_1659706567283: `${programacion.placa}`,
       UF_CRM_1659706553211: `${programacion.obra}`,
     }
@@ -53,6 +54,7 @@ export class CrmService {
       fields = {
         TITLE: `${programacion.obra}`,
         CATEGORY_ID: `${embudo}`,
+        COMPANY_ID: `${programacion.idCompañia}`,
         UF_CRM_1659706567283: `${programacion.placa}`,
         UF_CRM_1659706553211: `${programacion.obra}`,
         UF_CRM_1654545135809: [`${programacion.origen}`],
