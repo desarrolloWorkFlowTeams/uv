@@ -21,7 +21,8 @@ export class ServiceComponent implements OnInit {
   codeService = '';
   id = '';
   embudoId = '';
-  negociaciones: any[] = []
+  negociaciones: any[] = [];
+  compañiaSeleccionada: number = 0;
   materiales: any[] = []
   placas: any[] = [];
   campos: any = {};
@@ -99,6 +100,23 @@ export class ServiceComponent implements OnInit {
       'next': (deals: any) => {
         this.negociaciones = [];
         this.negociaciones = deals.result;
+        if (deals.total > 50) {
+          let totalNegociaciones = deals.total;
+          let iniciador = 50;
+          while (iniciador < totalNegociaciones) {
+            this.crm.getDealList(iniciador, options).subscribe({
+              'next': (dealsSiguiente: any) => {
+                const negociacionesSiguientes = dealsSiguiente.result;
+                for (let i = 0; i < negociacionesSiguientes.length; i++) {
+                  this.negociaciones.push(negociacionesSiguientes[i]);
+
+                }
+              },
+              'error': err => console.log(err)
+            })
+            iniciador += 50;
+          }
+        }
       },
       'error': err => console.log(err)
     })
@@ -107,6 +125,7 @@ export class ServiceComponent implements OnInit {
   newProgram() {
     if (this.programForm.valid) {
       let program = this.programForm.value;
+      program.idCompañia = this.compañiaSeleccionada;
       program.customId = this.negociacionesAEnviar.length + 1;
       program.producto = this.productSelected[0];
       this.negociacionesAEnviar.push(program);
@@ -124,6 +143,7 @@ export class ServiceComponent implements OnInit {
 
   negociacionSeleccionada(event?: any) {
     if (event) {
+      this.compañiaSeleccionada = this.negociaciones.filter((negociacion: any) => negociacion.TITLE === event)[0].COMPANY_ID
       this.crm.getDealProductList(`${this.negociaciones.filter((negociacion: any) => negociacion.TITLE === event)[0].ID}`).subscribe({
         'next': (products: any) => {
           this.materiales = products.result;

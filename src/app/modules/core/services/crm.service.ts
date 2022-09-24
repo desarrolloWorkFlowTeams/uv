@@ -45,6 +45,7 @@ export class CrmService {
     let fields: any = {
       TITLE: `${programacion.obra}`,
       CATEGORY_ID: `${embudo}`,
+      COMPANY_ID: `${programacion.idCompañia}`,
       UF_CRM_1659706567283: `${programacion.placa}`,
       UF_CRM_1659706553211: `${programacion.obra}`,
     }
@@ -53,6 +54,7 @@ export class CrmService {
       fields = {
         TITLE: `${programacion.obra}`,
         CATEGORY_ID: `${embudo}`,
+        COMPANY_ID: `${programacion.idCompañia}`,
         UF_CRM_1659706567283: `${programacion.placa}`,
         UF_CRM_1659706553211: `${programacion.obra}`,
         UF_CRM_1654545135809: [`${programacion.origen}`],
@@ -73,7 +75,7 @@ export class CrmService {
     return this.http.post(`${this.crm}/crm.deal.productrows.set`, body);
   }
 
-  actualizarProgramacion(id: string, programationUpdate: any, embudo: string, image: string) {
+  actualizarProgramacion(id: string, programationUpdate: any, embudo: string, image: any[]) {
 
     let fields: any;
     if (embudo === "9") {
@@ -83,7 +85,8 @@ export class CrmService {
         UF_CRM_1654627722206: `${programationUpdate.horometroFinal}`,
         UF_CRM_1654627437663: `${programationUpdate.cantidad}`,
         // UF_CRM_1655990970100: // image,
-        UF_CRM_1663029727124: image,
+        UF_CRM_1663948727860: image,
+        // UF_CRM_1663029727124: image,
         STAGE_ID: `${programationUpdate.etapa}`,
       }
     }
@@ -92,7 +95,8 @@ export class CrmService {
         UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
         UF_CRM_1654627437663: `${programationUpdate.cantidad}`,
         // UF_CRM_1655990970100: // image,
-        UF_CRM_1663029727124: image,
+        UF_CRM_1663948727860: image,
+        // UF_CRM_1663029727124: image,
         STAGE_ID: `${programationUpdate.etapa}`,
       }
     }
@@ -100,7 +104,8 @@ export class CrmService {
       fields = {
         UF_CRM_1654626530423: `${programationUpdate.numRecibo}`,
         // UF_CRM_1655990970100: // image,
-        UF_CRM_1663029727124: image,
+        UF_CRM_1663948727860: image,
+        // UF_CRM_1663029727124: image,
         STAGE_ID: `${programationUpdate.etapa}`,
       }
     }

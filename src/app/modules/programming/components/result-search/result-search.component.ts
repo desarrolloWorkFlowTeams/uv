@@ -37,9 +37,8 @@ export class ResultSearchComponent implements OnInit {
       'next': (deals: any) => {
         this.negociaciones = [];
         this.negociaciones = deals.result;
-        if (this.negociaciones.length > 0) {
-          this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID === "C7:NEW" || negociacion.STAGE_ID === "C3:NEW" || negociacion.STAGE_ID === "C9:NEW")
-        } else {
+        this.negociaciones = this.negociaciones.filter(negociacion => negociacion.STAGE_ID === "C7:NEW" || negociacion.STAGE_ID === "C3:NEW" || negociacion.STAGE_ID === "C9:NEW")
+        if (this.negociaciones.length == 0) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
